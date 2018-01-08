@@ -38,4 +38,12 @@
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
+
+
+    <!--测试(属性注入)-->
+    <bean id="testB" class="com.baobaotao.domain.TestB"/>
+    <bean id="testA" class="com.baobaotao.domain.TestA">
+        <!--TestA类中的公开属性-->
+        <property name="testB" ref="testB"/>
+    </bean>
 </beans>

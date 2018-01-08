@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <!--配置service、dao、数据源-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
@@ -10,6 +11,7 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <!--配置了servlet，自动扫描[servlet-name-servlet.xml]文件-->
     <servlet>
         <servlet-name>baobaotao</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
