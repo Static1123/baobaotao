@@ -19,4 +19,9 @@ public class UserServiceTest {
         User user = userService.findUserByUserName("admin");
         System.out.println(user);
     }
+
+    @Test
+    public void testTrans() throws Exception {
+        userService.test("test3", "test3");
+    }
 }

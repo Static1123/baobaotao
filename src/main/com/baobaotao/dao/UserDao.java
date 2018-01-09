@@ -3,11 +3,13 @@ package com.baobaotao.dao;
 import com.baobaotao.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Map;
 
 /**
@@ -40,8 +42,23 @@ public class UserDao {
         return user;
     }
 
-    public void updateLoginInfo(User user) {
+    public void updateLoginInfo(User user) throws Exception {
         String sqlStr = "Update t_user set last_visit=?,last_ip=?,credits=? where user_id = ?";
         jdbcTemplate.update(sqlStr, new Object[]{user.getLastVisit(), user.getLastIp(), user.getCredits(), user.getUserId()});
+        throw new Exception("测试回滚");
+    }
+
+    public int insert(final String userName, final String password) {
+        final String sql = "INSERT into t_user(user_name,password) values(?,?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ps.setObject(1, userName);
+                ps.setObject(2, password);
+                return ps;
+            }
+        }, keyHolder);
+        return keyHolder.getKey().intValue();
     }
 }

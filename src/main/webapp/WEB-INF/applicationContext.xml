@@ -35,7 +35,7 @@
     </aop:config>
     <tx:advice id="txAdvice" transaction-manager="transactionManager1">
         <tx:attributes>
-            <tx:method name="*"/>
+            <tx:method name="*" propagation="REQUIRED"/>
         </tx:attributes>
     </tx:advice>
 

@@ -32,7 +32,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/loginCheck.html", method = RequestMethod.POST)
-    public ModelAndView loginCheck(HttpServletRequest request, LoginCommand loginCommand) {
+    public ModelAndView loginCheck(HttpServletRequest request, LoginCommand loginCommand) throws Exception {
         boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName(), loginCommand.getPassword());
         if (!isValidUser) {
             return new ModelAndView("login", "error", "用户名或密码错误");
