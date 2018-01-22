@@ -41,7 +41,10 @@
 
 
     <!--测试(属性注入)-->
-    <bean id="testB" class="com.baobaotao.domain.TestB"/>
+    <bean id="testB" class="com.baobaotao.domain.TestB"
+          init-method="init"
+          destroy-method="destroy"
+          p:name="Jim" p:age="30"/>
     <bean id="testA" class="com.baobaotao.domain.TestA">
         <!--TestA类中的公开属性-->
         <property name="testB" ref="testB"/>
