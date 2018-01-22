@@ -1,13 +1,11 @@
 package com.yl;
 
-import com.baobaotao.domain.Beans;
 import com.baobaotao.domain.TestB;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.servlet.http.HttpServlet;
 import java.lang.reflect.Method;
 
 public class BeanTest {
@@ -37,21 +35,20 @@ public class BeanTest {
 //        testB.printName();
 //        testB.printAge();
 
-//        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:test-bean.xml");
-//        testB = context.getBean("testB", TestB.class);
-//        testB.printName();
-//        testB.printAge();
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:test-bean.xml");
+        testB = context.getBean("testB2", TestB.class);
+        testB.print();
 
 //        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(null);
 //        System.out.println(webApplicationContext);
 
         ConfigurableApplicationContext configurableApplicationContext;
 
-        ApplicationContext context1 = new AnnotationConfigApplicationContext(Beans.class);
-        testB = (TestB) context1.getBean("testB1");
-        testB.printName();
-        testB.printAge();
-
-        HttpServlet servlet;
+//        ApplicationContext context1 = new AnnotationConfigApplicationContext(Beans.class);
+//        testB = (TestB) context1.getBean("testB1");
+//        testB.print();
+//
+//        testB = (TestB) context1.getBean("testB2");
+//        testB.print();
     }
 }

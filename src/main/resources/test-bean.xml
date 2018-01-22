@@ -8,4 +8,9 @@
           destroy-method="destroy">
         <property name="age" value="20"/>
     </bean>
+    <bean id="customFactory" class="com.baobaotao.beanfactory.CustomFactory"/>
+    <!--通过工厂的实例方法获取-->
+    <bean id="testB1" class="com.baobaotao.domain.TestB" factory-bean="customFactory" factory-method="getTestB"/>
+    <!--通过工厂的静态方法获取-->
+    <bean id="testB2" class="com.baobaotao.beanfactory.CustomFactory" factory-method="getTestB1"/>
 </beans>

@@ -39,14 +39,14 @@
         </tx:attributes>
     </tx:advice>
 
-
     <!--测试(属性注入)-->
     <bean id="testB" class="com.baobaotao.domain.TestB"
           init-method="init"
-          destroy-method="destroy"
-          p:name="Jim" p:age="30"/>
+          destroy-method="destroy"/>
     <bean id="testA" class="com.baobaotao.domain.TestA">
         <!--TestA类中的公开属性-->
         <property name="testB" ref="testB"/>
+        <constructor-arg index="1" name="name" value="bbbb"/>
+        <constructor-arg index="0" name="testB" ref="testB"/>
     </bean>
 </beans>
