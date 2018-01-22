@@ -4,6 +4,7 @@ import com.baobaotao.domain.TestA;
 import com.baobaotao.domain.User;
 import com.baobaotao.service.UserService;
 import com.baobaotao.web.LoginCommand;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +26,14 @@ public class LoginController {
     @Autowired
     private TestA testA;
 
+    private Logger logger = Logger.getLogger(this.getClass());
+
     @RequestMapping(value = "/index.html", method = RequestMethod.GET)
     public String loginPage() {
-        testA.print();
+        logger.info("登录页面+info");
+        logger.error("登录页面+error");
+        logger.debug("登录页面+debug");
+        logger.warn("登录页面+warn");
         return "login";
     }
 

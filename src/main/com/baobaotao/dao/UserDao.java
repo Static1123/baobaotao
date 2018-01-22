@@ -42,10 +42,10 @@ public class UserDao {
         return user;
     }
 
-    public void updateLoginInfo(User user) throws Exception {
+    public void updateLoginInfo(User user) {
         String sqlStr = "Update t_user set last_visit=?,last_ip=?,credits=? where user_id = ?";
         jdbcTemplate.update(sqlStr, new Object[]{user.getLastVisit(), user.getLastIp(), user.getCredits(), user.getUserId()});
-        throw new Exception("测试回滚");
+        throw new RuntimeException("测试回滚");
     }
 
     public int insert(final String userName, final String password) {

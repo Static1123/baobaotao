@@ -1,8 +1,13 @@
 package com.yl;
 
+import com.baobaotao.domain.Beans;
 import com.baobaotao.domain.TestB;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.servlet.http.HttpServlet;
 import java.lang.reflect.Method;
 
 public class BeanTest {
@@ -19,5 +24,34 @@ public class BeanTest {
 //        TestA testA = (TestA) obj;
 //        testA.setTestB(testB);
 //        testA.print();
+    }
+
+    @Test
+    public void test() {
+        TestB testB;
+//        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//        Resource resource = resolver.getResource("classpath:/test-bean.xml");
+//        BeanFactory beanFactory = new XmlBeanFactory(resource);
+//        System.out.println("init BeanFactory");
+//        testB = beanFactory.getBean("testB", TestB.class);
+//        testB.printName();
+//        testB.printAge();
+
+//        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:test-bean.xml");
+//        testB = context.getBean("testB", TestB.class);
+//        testB.printName();
+//        testB.printAge();
+
+//        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(null);
+//        System.out.println(webApplicationContext);
+
+        ConfigurableApplicationContext configurableApplicationContext;
+
+        ApplicationContext context1 = new AnnotationConfigApplicationContext(Beans.class);
+        testB = (TestB) context1.getBean("testB1");
+        testB.printName();
+        testB.printAge();
+
+        HttpServlet servlet;
     }
 }
