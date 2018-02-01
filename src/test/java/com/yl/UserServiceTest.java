@@ -17,7 +17,7 @@ public class UserServiceTest {
     @Test
     public void test() {
         User user = userService.findUserByUserName("admin");
-        System.out.println(user);
+//        System.out.println(user);
     }
 
     @Test
