@@ -41,7 +41,9 @@
 
     <bean id="testAop" class="com.baobaotao.aop.TestAop"/>
     <aop:config>
+        <!--定义切点-->
         <aop:pointcut id="bbb" expression=" execution(* com.baobaotao.service.UserService.*(..))"/>
+        <!--定义增强-->
         <aop:advisor pointcut-ref="bbb" advice-ref="testAop"/>
     </aop:config>
 
