@@ -13,4 +13,11 @@
     <bean id="testB1" class="com.baobaotao.domain.TestB" factory-bean="customFactory" factory-method="getTestB"/>
     <!--通过工厂的静态方法获取-->
     <bean id="testB2" class="com.baobaotao.beanfactory.CustomFactory" factory-method="getTestB1"/>
+
+    <bean id="greetingBefore" class="com.baobaotao.advice.GreetingBeforeAdvice"/>
+    <bean id="target" class="com.baobaotao.advice.impl.WaiterImpl"/>
+    <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:proxyInterfaces="com.baobaotao.advice.Waiter"
+          p:target-ref="target"
+          p:interceptorNames="greetingBefore"/>
 </beans>
