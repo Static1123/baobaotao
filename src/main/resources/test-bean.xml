@@ -42,6 +42,7 @@
     <bean id="seller1" parent="parent"
           p:target-ref="sellerTarget"/>
 
+    <!--表达式切点-->
     <bean id="regexpAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor"
           p:advice-ref="greetingAdvice">
         <property name="patterns">
@@ -54,7 +55,9 @@
           p:interceptorNames="regexpAdvisor"
           p:target-ref="waiterTarget"
           p:proxyTargetClass="true"/>
+    <!--表达式切点结束-->
 
+    <!--动态方法切点-->
     <bean id="dynamicAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
         <property name="pointcut">
             <bean class="com.baobaotao.advisor.GreetingDynamicPointcut"/>
@@ -67,4 +70,30 @@
           p:interceptorNames="dynamicAdvisor"
           p:target-ref="waiterTarget"
           p:proxyTargetClass="true"/>
+    <!--动态切点方法结束-->
+
+    <!--流程切点-->
+    <bean id="controlFlowPointcut" class="org.springframework.aop.support.ControlFlowPointcut">
+        <!--指定流程切点的类-->
+        <constructor-arg type="java.lang.Class" value="com.baobaotao.advisor.WaiterDelegate"/>
+        <!--指定流程切点的方法-->
+        <constructor-arg type="java.lang.String" value="service"/>
+    </bean>
+    <bean id="controlFlowAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor"
+          p:pointcut-ref="controlFlowPointcut"
+          p:advice-ref="greetingAdvice"/>
+    <bean id="waiter4" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="controlFlowAdvisor"
+          p:target-ref="waiterTarget"
+          p:proxyTargetClass="true"/>
+    <!--流程切点结束-->
+
+    <!--复合切点-->
+    <bean id="gcp" class="com.baobaotao.advisor.GreetingComposablePointcut"/>
+    <bean id="composableAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor"
+          p:pointcut="#{gcp.intersectionPointcut}"
+          p:advice-ref="greetingAdvice"/>
+    <bean id="waiter5" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="composableAdvisor" p:target-ref="waiterTarget" p:proxyTargetClass="true"/>
+    <!--复合切点结束-->
 </beans>

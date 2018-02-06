@@ -31,9 +31,19 @@ public class GreetingDynamicPointcut extends DynamicMethodMatcherPointcut {
     @Override
     public boolean matches(Method method, Class clazz) {
         System.out.println("调用matches(method,clazz)" + clazz.getName() + "." + method.getName() + "做静态检查");
-        return "greetTo".equals(method.getName());
+        boolean f = "greetTo".equals(method.getName());
+        System.out.println(f);
+        return f;
     }
 
+    /**
+     * boolean matches(Method method, Class clazz) 返回true调用
+     *
+     * @param method
+     * @param targetClass
+     * @param args
+     * @return
+     */
     public boolean matches(Method method, Class<?> targetClass, Object[] args) {
         System.out.println("调用matches(method,clazz)" + targetClass.getName() + "." + method.getName() + "做动态检查");
         String clientName = String.valueOf(args[0]);
