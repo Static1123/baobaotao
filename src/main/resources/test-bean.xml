@@ -14,10 +14,57 @@
     <!--通过工厂的静态方法获取-->
     <bean id="testB2" class="com.baobaotao.beanfactory.CustomFactory" factory-method="getTestB1"/>
 
+    <bean id="transactionManager" class="com.baobaotao.advice.TransactionManager"/>
+    <bean id="forumServiceTarget" class="com.baobaotao.service.impl.ForumServiceImpl"/>
+    <bean id="forumService" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="transactionManager"
+          p:target-ref="forumServiceTarget"
+          p:proxyTargetClass="true"/><!--使用CGLib代理-->
+
     <bean id="greetingBefore" class="com.baobaotao.advice.GreetingBeforeAdvice"/>
     <bean id="target" class="com.baobaotao.advice.impl.WaiterImpl"/>
     <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
           p:proxyInterfaces="com.baobaotao.advice.Waiter"
           p:target-ref="target"
           p:interceptorNames="greetingBefore"/>
+
+    <bean id="waiterTarget" class="com.baobaotao.advisor.Waiter"/>
+    <bean id="sellerTarget" class="com.baobaotao.advisor.Seller"/>
+    <bean id="greetingAdvice" class="com.baobaotao.advisor.GreetingBeforeAdvice"/>
+    <bean id="greetingAdvisor" class="com.baobaotao.advisor.GreetingAdvisor"
+          p:advice-ref="greetingAdvice"/>
+    <!--定义公共的配置信息-->
+    <bean id="parent" abstract="true" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="greetingAdvisor"
+          p:proxyTargetClass="true"/>
+    <bean id="waiter1" parent="parent"
+          p:target-ref="waiterTarget"/>
+    <bean id="seller1" parent="parent"
+          p:target-ref="sellerTarget"/>
+
+    <bean id="regexpAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor"
+          p:advice-ref="greetingAdvice">
+        <property name="patterns">
+            <list>
+                <value>.*greet.*</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="waiter2" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="regexpAdvisor"
+          p:target-ref="waiterTarget"
+          p:proxyTargetClass="true"/>
+
+    <bean id="dynamicAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+        <property name="pointcut">
+            <bean class="com.baobaotao.advisor.GreetingDynamicPointcut"/>
+        </property>
+        <property name="advice">
+            <bean class="com.baobaotao.advisor.GreetingBeforeAdvice"/>
+        </property>
+    </bean>
+    <bean id="waiter3" class="org.springframework.aop.framework.ProxyFactoryBean"
+          p:interceptorNames="dynamicAdvisor"
+          p:target-ref="waiterTarget"
+          p:proxyTargetClass="true"/>
 </beans>

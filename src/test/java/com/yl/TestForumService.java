@@ -22,7 +22,16 @@ public class TestForumService {
 
         ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:test-bean.xml");
         Waiter waiter = (Waiter) ctx.getBean("waiter");
-        waiter.greetTo("Tom");
+        waiter.greetTo("Static");
+        waiter.serviceTo("Jack");
+
+        ForumService forumService = (ForumService) ctx.getBean("forumService");
+        forumService.removeForum(1);
+        try {
+            forumService.updateForum();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     private static void beforeAdvice() {

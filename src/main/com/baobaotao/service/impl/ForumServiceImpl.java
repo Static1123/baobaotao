@@ -2,6 +2,8 @@ package com.baobaotao.service.impl;
 
 import com.baobaotao.service.ForumService;
 
+import java.sql.SQLException;
+
 /**
  * @author Administrator
  */
@@ -26,5 +28,11 @@ public class ForumServiceImpl implements ForumService {
             throw new RuntimeException(ex);
         }
 //        PerformanceMonitor.end();
+
+        throw new RuntimeException("运行异常.");
+    }
+
+    public void updateForum() throws Exception {
+        throw new SQLException("数据更新操作异常.");
     }
 }

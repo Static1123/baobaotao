@@ -10,6 +10,7 @@ public class GreatingInterceptor implements MethodInterceptor {
         Object[] args = methodInvocation.getArguments();
         String clientName = String.valueOf(args[0]);
         System.out.println("How are you ! Mr." + clientName + ".");
+        //通过反射机制调用方法
         Object obj = methodInvocation.proceed();
         System.out.println("Pls enjoy yourself!");
         return obj;
