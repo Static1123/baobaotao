@@ -1,5 +1,6 @@
 package com.baobaotao.service.impl;
 
+import com.baobaotao.aspectj.anno.NeedTest;
 import com.baobaotao.service.ForumService;
 
 import java.sql.SQLException;
@@ -34,5 +35,15 @@ public class ForumServiceImpl implements ForumService {
 
     public void updateForum() throws Exception {
         throw new SQLException("数据更新操作异常.");
+    }
+
+    @NeedTest
+    public void deleteForum(int forumId) {
+        System.out.println("删除论坛模块:" + forumId);
+    }
+
+    @NeedTest(value = false)
+    public void deleteTopic(int postId) {
+        System.out.println("删除论坛主题:" + postId);
     }
 }
